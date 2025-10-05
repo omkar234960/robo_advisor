@@ -13,15 +13,9 @@ export default function Portfolio() {
   return (
     <section>
       <h1 className="page-title">Your Portfolio</h1>
-
-      <h2 className="section-title">📊 Holdings</h2>
       <div className="row">
         {holdings.map((p) => (
-          <article
-            key={p.id}
-            onClick={() => setActive(p.id)}
-            className={`card ${active === p.id ? "active-green" : ""}`}
-          >
+          <article key={p.id} onClick={() => setActive(p.id)} className={`card ${active === p.id ? "active-green" : ""}`}>
             <div className="card-head">
               <h3>{p.name}</h3>
               <div className={`change ${p.change.includes("+") ? "up" : "down"}`}>{p.change}</div>

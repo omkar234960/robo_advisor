@@ -1,52 +1,55 @@
 import React from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Header from "./header";
-import Login from "./login";
-import Dashboard from "./Dashboard";
-import Portfolio from "./Portfolio";
+import { Routes, Route } from "react-router-dom";
+import Header from "./header.jsx";
+import Sidebar from "./sidebar.jsx";
+import Home from "./home.jsx";
+import Login from "./login.jsx";
+import Dashboard from "./dashboard.jsx";
+import Portfolio from "./portfolio.jsx";
+import Chat from "./chat.jsx";
+import Logout from "./logout.jsx";
+import PrivateRoute from "./PrivateRoute.jsx";
 
-/**
- * Simple route guard. If not logged in -> alert & redirect to /login.
- * Alerts are plain window.alert as requested (fake JS alert).
- */
-function PrivateRoute({ children }) {
-  const isAuth = localStorage.getItem("obo_auth") === "true";
-  const loc = useLocation();
-  if (!isAuth) {
-    // Fake alert and redirect
-    window.alert("You must log in to view this page.");
-    return <Navigate to="/login" state={{ from: loc }} replace />;
-  }
-  return children;
-}
-
-export default function App() {
+function App() {
   return (
-    <div className="app-root">
-      <Header />
-      <main className="app-main">
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/portfolio"
-            element={
-              <PrivateRoute>
-                <Portfolio />
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </main>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Header />
+              <Sidebar />
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/portfolio"
+          element={
+            <PrivateRoute>
+              <Header />
+              <Sidebar />
+              <Portfolio />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <PrivateRoute>
+              <Header />
+              <Sidebar />
+              <Chat />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/logout" element={<Logout />} />
+      </Routes>
+    </>
   );
 }
+
+export default App;

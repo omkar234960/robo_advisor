@@ -11,7 +11,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("obo_auth", "true");
+    localStorage.setItem("token", "true"); // token for PrivateRoute
     localStorage.setItem("obo_user", JSON.stringify({ name: form.name }));
     alert("Login successful!");
     navigate("/dashboard");
